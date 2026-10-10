@@ -512,3 +512,56 @@ body {
     box-shadow: none;
   }
 }
+
+/* ==========================================================================
+   Brand & Theme Solid Utility Fallbacks (Guarantees rich contrast & color)
+   ========================================================================== */
+.bg-brand-950 { background-color: #0f1a33 !important; }
+.bg-brand-900 { background-color: #172749 !important; }
+.bg-brand-800 { background-color: #1e335e !important; }
+.bg-brand-700 { background-color: #274378 !important; }
+.bg-brand-600 { background-color: #325696 !important; }
+.bg-brand-500 { background-color: #416ab0 !important; }
+.bg-brand-400 { background-color: #6f9fe3 !important; }
+.bg-brand-50  { background-color: #f0f5fc !important; }
+
+.text-brand-950 { color: #0f1a33 !important; }
+.text-brand-900 { color: #172749 !important; }
+.text-brand-800 { color: #1e335e !important; }
+.text-brand-700 { color: #274378 !important; }
+.text-brand-600 { color: #325696 !important; }
+.text-brand-500 { color: #416ab0 !important; }
+.text-brand-400 { color: #6f9fe3 !important; }
+.text-brand-300 { color: #9ec4ee !important; }
+.text-brand-200 { color: #c4dbf4 !important; }
+
+.border-brand-950 { border-color: #0f1a33 !important; }
+.border-brand-900 { border-color: #172749 !important; }
+.border-brand-800 { border-color: #1e335e !important; }
+.border-brand-700 { border-color: #274378 !important; }
+.border-brand-600 { border-color: #325696 !important; }
+.border-brand-500 { border-color: #416ab0 !important; }
+.border-brand-200 { border-color: #c4dbf4 !important; }
+
+.bg-eco-500 { background-color: #408e3c !important; }
+.bg-eco-600 { background-color: #2f742c !important; }
+.bg-eco-700 { background-color: #265c24 !important; }
+.bg-eco-50  { background-color: #f0f9f1 !important; }
+
+.text-eco-500 { color: #408e3c !important; }
+.text-eco-600 { color: #2f742c !important; }
+.text-eco-700 { color: #265c24 !important; }
+
+.border-eco-500 { border-color: #408e3c !important; }
+.border-eco-200 { border-color: #bce4c1 !important; }
+
+/* Subpage Hero Banner Rich Gradient */
+.page-hero-banner {
+  background: linear-gradient(135deg, #091326 0%, #172749 50%, #0f172a 100%) !important;
+  color: #ffffff !important;
+}
+
+/* Nav & Top Bar Guarantees */
+nav.sticky {
+  background-color: #172749 !important;
+}

@@ -6,13 +6,64 @@
   <title>Careers & Recruitment | Galaxy Solutions - Bokaro Steel City</title>
   <meta name="description" content="Engineering job openings, project management roles, and technical recruitment applications.">
   
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  
   <!-- Inter Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN with Full Brand Palette -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f5fc',
+              100: '#e1ecf9',
+              200: '#c4dbf4',
+              300: '#9ec4ee',
+              400: '#6f9fe3',
+              500: '#416ab0', /* Core Royal Blue */
+              600: '#325696',
+              700: '#274378',
+              800: '#1e335e',
+              900: '#172749',
+              950: '#0f1a33',
+            },
+            eco: {
+              50: '#f0f9f1',
+              100: '#dcf1df',
+              200: '#bce4c1',
+              300: '#92d19b',
+              400: '#63b86f',
+              500: '#408e3c', /* Core Fresh Eco Green */
+              600: '#2f742c',
+              700: '#265c24',
+              800: '#214920',
+              900: '#1c3d1b',
+            },
+            water: {
+              50: '#f0f8ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+            },
+            defence: {
+              700: '#334155',
+              800: '#1e293b',
+              900: '#0f172a',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
   
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
@@ -163,7 +214,7 @@
     </div>
   </nav>
   <!-- ================= PAGE HERO BANNER ================= -->
-  <div class="bg-gradient-to-r from-brand-950 via-brand-900 to-slate-900 text-white py-10 sm:py-14 border-b border-brand-800 bg-grid-pattern relative">
+  <div class="page-hero-banner bg-gradient-to-r from-brand-950 via-brand-900 to-slate-900 text-white py-10 sm:py-14 border-b border-brand-800 bg-grid-pattern relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div class="space-y-2">
