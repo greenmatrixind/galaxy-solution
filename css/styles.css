@@ -470,7 +470,7 @@ body {
 /* Back to Top Floating Action Button */
 .back-to-top-btn {
   position: fixed;
-  bottom: 1.25rem;
+  bottom: 4.5rem; /* Comfortably clears mobile sticky dock on phones */
   right: 1.25rem;
   width: 2.75rem;
   height: 2.75rem;
@@ -488,9 +488,19 @@ body {
   transition: all 0.25s ease-in-out;
   border: 1.5px solid rgba(255, 255, 255, 0.4);
 }
+@media (min-width: 640px) {
+  .back-to-top-btn {
+    bottom: 1.25rem;
+  }
+}
 .back-to-top-btn.visible {
   opacity: 1;
   visibility: visible;
+}
+
+/* Sticky Mobile Bottom Dock with iOS Safe Area support */
+.mobile-bottom-dock {
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px));
 }
 .back-to-top-btn:hover {
   transform: translateY(-3px);
