@@ -125,6 +125,14 @@ function initQuoteForm() {
     const phone = document.getElementById('quotePhone')?.value || 'N/A';
     const reqType = document.getElementById('quoteType')?.value || 'General Inquiry';
 
+    // Submit lead seamlessly to Netlify Forms backend
+    const formData = new FormData(form);
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    }).catch(err => console.log('Enquiry logged:', err));
+
     const refNo = 'GS-REF-' + Math.floor(100000 + Math.random() * 900000);
     const dateStr = new Date().toLocaleDateString('en-IN', {
       day: 'numeric',
@@ -209,6 +217,15 @@ function initCareersModal() {
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+
+      // Submit application data to Netlify Forms backend
+      const formData = new FormData(form);
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
+      }).catch(err => console.log('Application logged:', err));
+
       form.classList.add('hidden');
       if (successNotice) successNotice.classList.remove('hidden');
       setTimeout(() => {
@@ -220,13 +237,8 @@ function initCareersModal() {
   }
 }
 
-// Global Quick Search Bar with Multi-Page Routing
+// Global & Mobile Quick Search Bar with Multi-Page Routing
 function initSearch() {
-  const searchInput = document.getElementById('globalSearchInput');
-  const searchResults = document.getElementById('searchResultsDropdown');
-
-  if (!searchInput || !searchResults) return;
-
   const searchableIndex = [
     { title: 'Reverse Osmosis (RO) Technology', category: 'Water Technology', pageUrl: 'water-tech.html' },
     { title: 'Water Treatment Plants (WTP)', category: 'Water Technology', pageUrl: 'water-tech.html' },
@@ -259,45 +271,68 @@ function initSearch() {
     { title: 'About Galaxy Solutions & Philosophy', category: 'About Us', pageUrl: 'about.html' }
   ];
 
-  searchInput.addEventListener('input', (e) => {
-    const query = e.target.value.trim().toLowerCase();
-    if (!query) {
-      searchResults.classList.add('hidden');
-      searchResults.innerHTML = '';
-      return;
-    }
+  function setupSearch(inputEl, resultsEl, isDarkTheme = false) {
+    if (!inputEl || !resultsEl) return;
 
-    const matches = searchableIndex.filter(item => 
-      item.title.toLowerCase().includes(query) ||
-      item.category.toLowerCase().includes(query)
-    );
+    inputEl.addEventListener('input', (e) => {
+      const query = e.target.value.trim().toLowerCase();
+      if (!query) {
+        resultsEl.classList.add('hidden');
+        resultsEl.innerHTML = '';
+        return;
+      }
 
-    if (matches.length === 0) {
-      searchResults.innerHTML = `<div class="p-3 text-xs text-slate-500">No matching services found. Try "RO", "CPWD", "Defence", "STP", or "Civil".</div>`;
-      searchResults.classList.remove('hidden');
-      return;
-    }
+      const matches = searchableIndex.filter(item => 
+        item.title.toLowerCase().includes(query) ||
+        item.category.toLowerCase().includes(query)
+      );
 
-    searchResults.innerHTML = matches.slice(0, 6).map(m => `
-      <a href="${m.pageUrl}" class="block p-2.5 text-xs border-b border-slate-100 hover:bg-slate-50 transition">
-        <div class="font-semibold text-slate-900">${m.title}</div>
-        <div class="text-[10px] text-brand-600 uppercase tracking-wider font-bold">${m.category}</div>
-      </a>
-    `).join('');
+      if (matches.length === 0) {
+        const textClass = isDarkTheme ? 'text-slate-400' : 'text-slate-500';
+        resultsEl.innerHTML = `<div class="p-3 text-xs ${textClass}">No matching services found. Try "RO", "CPWD", "Defence", "STP", or "Civil".</div>`;
+        resultsEl.classList.remove('hidden');
+        return;
+      }
 
-    searchResults.classList.remove('hidden');
-  });
+      const itemBorder = isDarkTheme ? 'border-slate-700/60 hover:bg-slate-700/70' : 'border-slate-100 hover:bg-slate-50';
+      const titleColor = isDarkTheme ? 'text-white' : 'text-slate-900';
+      const catColor = isDarkTheme ? 'text-sky-300' : 'text-brand-600';
 
-  document.addEventListener('click', (e) => {
-    if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
-      searchResults.classList.add('hidden');
-    }
-  });
+      resultsEl.innerHTML = matches.slice(0, 6).map(m => `
+        <a href="${m.pageUrl}" class="block p-2.5 text-xs border-b ${itemBorder} transition">
+          <div class="font-semibold ${titleColor}">${m.title}</div>
+          <div class="text-[10px] ${catColor} uppercase tracking-wider font-bold">${m.category}</div>
+        </a>
+      `).join('');
 
-  searchResults.addEventListener('click', () => {
-    searchResults.classList.add('hidden');
-    searchInput.value = '';
-  });
+      resultsEl.classList.remove('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!inputEl.contains(e.target) && !resultsEl.contains(e.target)) {
+        resultsEl.classList.add('hidden');
+      }
+    });
+
+    resultsEl.addEventListener('click', () => {
+      resultsEl.classList.add('hidden');
+      inputEl.value = '';
+    });
+  }
+
+  // Setup Desktop Header Search
+  setupSearch(
+    document.getElementById('globalSearchInput'),
+    document.getElementById('searchResultsDropdown'),
+    false
+  );
+
+  // Setup Mobile Drawer Search
+  setupSearch(
+    document.getElementById('mobileSearchInput'),
+    document.getElementById('mobileSearchResultsDropdown'),
+    true
+  );
 }
 
 // URL Query Parameter Handler for Preselecting Quotation Types

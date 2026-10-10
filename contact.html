@@ -5,6 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact & Request Quotation | Galaxy Solutions - Bokaro Steel City</title>
   <meta name="description" content="Bokaro Steel City head office, phone (+91-9852625103), email, quotation form, and FAQs.">
+  <link rel="canonical" href="https://galaxysolution.netlify.app/contact.html">
+
+  <!-- Official Vector Favicon & App Touch Icon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <!-- Open Graph / WhatsApp / LinkedIn Social Previews -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Galaxy Solutions">
+  <meta property="og:title" content="Contact & Request Quotation">
+  <meta property="og:description" content="Bokaro Steel City head office, phone (+91-9852625103), email, quotation form, and FAQs.">
+  <meta property="og:image" content="https://galaxysolution.netlify.app/assets/favicon.svg">
+  <meta property="og:url" content="https://galaxysolution.netlify.app/contact.html">
+
+  <!-- Twitter Social Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Contact & Request Quotation">
+  <meta name="twitter:description" content="Bokaro Steel City head office, phone (+91-9852625103), email, quotation form, and FAQs.">
+  <meta name="twitter:image" content="https://galaxysolution.netlify.app/assets/favicon.svg">
   
   <!-- Inter Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -195,6 +214,7 @@
       <div class="pb-3 mb-2 border-b border-slate-800">
         <input type="text" id="mobileSearchInput" placeholder="Search services, registrations..." 
                class="w-full text-xs bg-slate-800 border border-slate-700 rounded px-3 py-2 text-white placeholder-slate-400 focus:outline-none focus:border-brand-500">
+        <div id="mobileSearchResultsDropdown" class="hidden mt-1.5 bg-slate-800/95 border border-slate-700 rounded-md shadow-xl max-h-56 overflow-y-auto"></div>
       </div>
       <a href="index.html" class="block px-3 py-2.5 text-xs uppercase font-semibold text-slate-200  hover:bg-slate-800 rounded transition">Home</a>
       <a href="about.html" class="block px-3 py-2.5 text-xs uppercase font-semibold text-slate-200  hover:bg-slate-800 rounded transition">About Us</a>
@@ -316,7 +336,7 @@
                 </div>
                 <div>
                   <span class="font-bold text-slate-900 block">Phone</span>
-                  <a href="tel:+919852625103" class="text-blue-800 hover:underline font-mono">+91-9852625103</a>
+                  <a href="tel:+919852625103" class="text-blue-800 hover:underline font-mono">+91-9852625103</a><br><a href="https://wa.me/919852625103?text=Hello%20Galaxy%20Solutions,%20I%20have%20an%20engineering%20inquiry" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-emerald-600 hover:text-emerald-700 font-semibold text-xs mt-1 transition"><svg class="w-3.5 h-3.5 fill-current text-emerald-600" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> Chat on WhatsApp</a>
                 </div>
               </div>
 
@@ -363,33 +383,34 @@
               Please submit your technical requirement or quotation request. Our engineering desk will respond with an initial appraisal.
             </p>
 
-            <form id="quotationForm" class="space-y-4">
+            <form id="quotationForm" name="quotation" method="POST" data-netlify="true" class="space-y-4">
+                <input type="hidden" name="form-name" value="quotation">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label for="quoteName" class="block text-xs font-semibold text-slate-700 mb-1">Full Name *</label>
-                  <input type="text" id="quoteName" required placeholder="e.g. Er. Rajesh Kumar" class="form-input text-xs">
+                  <input type="text" id="quoteName" name="fullName" required placeholder="e.g. Er. Rajesh Kumar" class="form-input text-xs">
                 </div>
                 <div>
                   <label for="quoteOrg" class="block text-xs font-semibold text-slate-700 mb-1">Company / Organization *</label>
-                  <input type="text" id="quoteOrg" required placeholder="e.g. CPWD / PSU / Private Entity" class="form-input text-xs">
+                  <input type="text" id="quoteOrg" name="organization" required placeholder="e.g. CPWD / PSU / Private Entity" class="form-input text-xs">
                 </div>
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label for="quoteEmail" class="block text-xs font-semibold text-slate-700 mb-1">Official Email *</label>
-                  <input type="email" id="quoteEmail" required placeholder="name@domain.com" class="form-input text-xs">
+                  <input type="email" id="quoteEmail" name="email" required placeholder="name@domain.com" class="form-input text-xs">
                 </div>
                 <div>
                   <label for="quotePhone" class="block text-xs font-semibold text-slate-700 mb-1">Phone / Mobile *</label>
-                  <input type="tel" id="quotePhone" required placeholder="+91-XXXXXXXXXX" class="form-input text-xs">
+                  <input type="tel" id="quotePhone" name="phone" required placeholder="+91-XXXXXXXXXX" class="form-input text-xs">
                 </div>
               </div>
 
               <!-- Exact Requirement Type Dropdown from Document -->
               <div>
                 <label for="quoteType" class="block text-xs font-semibold text-slate-700 mb-1">Requirement Type *</label>
-                <select id="quoteType" required class="form-input text-xs">
+                <select id="quoteType" name="requirementType" required class="form-input text-xs">
                   <option value="" disabled selected>-- Select Requirement Type --</option>
                   <option value="Water Technology">Water Technology</option>
                   <option value="RO / WTP">RO / WTP</option>
@@ -407,7 +428,7 @@
 
               <div>
                 <label for="quoteDetails" class="block text-xs font-semibold text-slate-700 mb-1">Project / Requirement Details *</label>
-                <textarea id="quoteDetails" rows="4" required placeholder="Describe technical scope, capacity, site location, timeline or tender reference..." class="form-input text-xs"></textarea>
+                <textarea id="quoteDetails" name="details" rows="4" required placeholder="Describe technical scope, capacity, site location, timeline or tender reference..." class="form-input text-xs"></textarea>
               </div>
 
               <div class="pt-2 flex items-center justify-between">
@@ -672,10 +693,11 @@
         Your application and credentials have been submitted to the Galaxy Solutions Human Resources &amp; Technical Recruitment board. We will review your profile shortly.
       </div>
 
-      <form id="careersForm" class="space-y-3">
+      <form id="careersForm" name="careers" method="POST" data-netlify="true" class="space-y-3">
+        <input type="hidden" name="form-name" value="careers">
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-1">Applying For Position *</label>
-          <select id="careerRoleSelect" required class="form-input text-xs">
+          <select id="careerRoleSelect" name="position" required class="form-input text-xs">
             <option value="Civil Engineers">Civil Engineers</option>
             <option value="Site Engineers">Site Engineers</option>
             <option value="Project Managers">Project Managers</option>
@@ -694,22 +716,22 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block text-xs font-semibold text-slate-700 mb-1">Applicant Name *</label>
-            <input type="text" required placeholder="Full name" class="form-input text-xs">
+            <input type="text" name="applicantName" required placeholder="Full name" class="form-input text-xs">
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-700 mb-1">Phone *</label>
-            <input type="tel" required placeholder="+91-XXXXXXXXXX" class="form-input text-xs">
+            <input type="tel" name="phone" required placeholder="+91-XXXXXXXXXX" class="form-input text-xs">
           </div>
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-1">Email Address *</label>
-          <input type="email" required placeholder="your.name@email.com" class="form-input text-xs">
+          <input type="email" name="email" required placeholder="your.name@email.com" class="form-input text-xs">
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-1">Years of Experience &amp; Specialization *</label>
-          <input type="text" required placeholder="e.g. 5 Years in Water Treatment / RCC Site Execution" class="form-input text-xs">
+          <input type="text" name="experience" required placeholder="e.g. 5 Years in Water Treatment / RCC Site Execution" class="form-input text-xs">
         </div>
 
         <div>
