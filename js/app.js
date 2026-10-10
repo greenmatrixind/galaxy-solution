@@ -144,11 +144,18 @@ function initQuoteForm() {
     const clientEl = document.getElementById('modalClientName');
     const typeEl = document.getElementById('modalReqType');
     const dateEl = document.getElementById('modalDate');
+    const waBtn = document.getElementById('modalWhatsAppBtn');
 
     if (refEl) refEl.textContent = refNo;
     if (clientEl) clientEl.textContent = `${name} (${org})`;
     if (typeEl) typeEl.textContent = reqType;
     if (dateEl) dateEl.textContent = dateStr;
+
+    if (waBtn) {
+      const details = document.getElementById('quoteDetails')?.value || 'N/A';
+      const waMsg = `Hello Galaxy Solutions,\n\nI have submitted an engineering inquiry on your portal:\n• Ref No: ${refNo}\n• Name: ${name}\n• Organization: ${org}\n• Category: ${reqType}\n• Phone: ${phone}\n• Scope: ${details}\n\nPlease review and provide the initial appraisal.`;
+      waBtn.href = `https://wa.me/919852625103?text=${encodeURIComponent(waMsg)}`;
+    }
 
     if (successModal) {
       successModal.classList.remove('hidden');
