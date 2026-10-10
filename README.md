@@ -24,17 +24,30 @@ This website was specifically designed and developed based on the complete 21-pa
 
 ---
 
-## 📂 Project Structure
+## 📂 Project Structure (Multi-Page Architecture)
 ```
 galaxy solution/
 │
-├── index.html          # Main comprehensive responsive website (All 15 pages/sections)
+├── index.html          # Flagship Home portal (Hero, Console, Pillars & Overview)
+├── about.html          # About Us (Who We Are, Philosophy, Formula, Vision & Mission)
+├── water-tech.html     # Water Technology Systems (10 Areas, Automation, 9-Stage Lifecycle)
+├── defence-tech.html   # Defence Technology R&D (12 Research Domains, Methodology, Testing)
+├── services.html       # Comprehensive Services (Civil, Govt Infra, Defence, MEP & AMC)
+├── projects.html       # Projects Showcase (Filterable project portfolio across India)
+├── rd-innovation.html  # R&D, Innovation & Institutional Technology Collaboration
+├── registrations.html  # Government Registrations & Empanelments (CPWD, GeM, BCD, WRD, JBVNL)
+├── quality-hse.html    # Quality Policy, QA/QC Protocols & 12 Industries Served
+├── process.html        # Our 11-Step Engineering Project Execution Methodology
+├── careers.html        # Careers & Recruitment (12 Openings & Application Form)
+├── contact.html        # Contact Us (Bokaro Head Office, Official Quotation Form & FAQs)
+│
 ├── css/
-│   └── styles.css      # Custom sober stylesheet, print styles, and typography
+│   └── styles.css      # Custom stylesheet, theme variables, touch & print styles
 ├── js/
-│   └── app.js          # Interactive filters, live search, tabs, quote modal & forms
-├── assets/             # Assets and media directory
-└── README.md           # Documentation & instructions
+│   └── app.js          # Interactive multi-page routing, filters, tabs, search & modals
+├── netlify.toml        # Netlify production deployment & cache header configuration
+├── .gitignore          # Repository ignore rules
+└── README.md           # Documentation & architecture specifications
 ```
 
 ---

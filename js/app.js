@@ -1,6 +1,6 @@
 /**
- * Galaxy Solutions - Interactive Website Logic
- * Clean, sober, and accessible JavaScript for enterprise & government clients.
+ * Galaxy Solutions - Interactive Multi-Page Website Logic
+ * Enterprise & government client accessible JavaScript.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initQuoteForm();
   initCareersModal();
   initSearch();
-  initScrollSpy();
+  initQueryParamHandler();
   initBackToTop();
 });
 
@@ -41,9 +41,7 @@ function initFaqAccordion() {
     if (!header) return;
     header.addEventListener('click', () => {
       const isOpen = item.classList.contains('open');
-      // close all
       items.forEach(i => i.classList.remove('open'));
-      // toggle clicked
       if (!isOpen) {
         item.classList.add('open');
       }
@@ -126,7 +124,6 @@ function initQuoteForm() {
     const email = document.getElementById('quoteEmail')?.value || 'N/A';
     const phone = document.getElementById('quotePhone')?.value || 'N/A';
     const reqType = document.getElementById('quoteType')?.value || 'General Inquiry';
-    const details = document.getElementById('quoteDetails')?.value || 'No additional details specified.';
 
     const refNo = 'GS-REF-' + Math.floor(100000 + Math.random() * 900000);
     const dateStr = new Date().toLocaleDateString('en-IN', {
@@ -135,7 +132,6 @@ function initQuoteForm() {
       year: 'numeric'
     });
 
-    // Populate modal receipt
     const refEl = document.getElementById('modalRefNo');
     const clientEl = document.getElementById('modalClientName');
     const typeEl = document.getElementById('modalReqType');
@@ -146,19 +142,27 @@ function initQuoteForm() {
     if (typeEl) typeEl.textContent = reqType;
     if (dateEl) dateEl.textContent = dateStr;
 
-    // Show modal
     if (successModal) {
       successModal.classList.remove('hidden');
       successModal.classList.add('flex');
     }
-
-    form.reset();
   });
 
   if (closeModalBtn && successModal) {
     closeModalBtn.addEventListener('click', () => {
       successModal.classList.add('hidden');
       successModal.classList.remove('flex');
+      form.reset();
+    });
+  }
+
+  if (successModal) {
+    successModal.addEventListener('click', (e) => {
+      if (e.target === successModal) {
+        successModal.classList.add('hidden');
+        successModal.classList.remove('flex');
+        form.reset();
+      }
     });
   }
 }
@@ -169,6 +173,7 @@ function initCareersModal() {
   const openBtns = document.querySelectorAll('.open-career-modal');
   const closeBtn = document.getElementById('closeCareersModal');
   const form = document.getElementById('careersForm');
+  const roleSelect = document.getElementById('careerRoleSelect');
   const successNotice = document.getElementById('careerSuccessMsg');
 
   if (!modal) return;
@@ -176,15 +181,14 @@ function initCareersModal() {
   openBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      const role = btn.getAttribute('data-role') || 'Civil Engineers';
-      const roleSelect = document.getElementById('careerRoleSelect');
-      if (roleSelect) {
+      const role = btn.getAttribute('data-role');
+      if (role && roleSelect) {
         roleSelect.value = role;
       }
       modal.classList.remove('hidden');
       modal.classList.add('flex');
-      if (successNotice) successNotice.classList.add('hidden');
       if (form) form.classList.remove('hidden');
+      if (successNotice) successNotice.classList.add('hidden');
     });
   });
 
@@ -205,7 +209,7 @@ function initCareersModal() {
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      if (form) form.classList.add('hidden');
+      form.classList.add('hidden');
       if (successNotice) successNotice.classList.remove('hidden');
       setTimeout(() => {
         modal.classList.add('hidden');
@@ -216,7 +220,7 @@ function initCareersModal() {
   }
 }
 
-// Global Quick Search Bar
+// Global Quick Search Bar with Multi-Page Routing
 function initSearch() {
   const searchInput = document.getElementById('globalSearchInput');
   const searchResults = document.getElementById('searchResultsDropdown');
@@ -224,31 +228,35 @@ function initSearch() {
   if (!searchInput || !searchResults) return;
 
   const searchableIndex = [
-    { title: 'Reverse Osmosis (RO) Technology', category: 'Water Technology', sectionId: 'water-tech' },
-    { title: 'Water Treatment Plants (WTP)', category: 'Water Technology', sectionId: 'water-tech' },
-    { title: 'Sewage Treatment Plants (STP)', category: 'Water Technology', sectionId: 'water-tech' },
-    { title: 'Effluent Treatment Plants (ETP)', category: 'Water Technology', sectionId: 'water-tech' },
-    { title: 'Dialysis RO Systems (Healthcare)', category: 'Water Technology', sectionId: 'water-tech' },
-    { title: 'Water Softening & Multi-Stage Filtration', category: 'Water Technology', sectionId: 'water-tech' },
-    { title: 'Defence Technology R&D & Prototyping', category: 'Defence R&D', sectionId: 'defence-tech' },
-    { title: 'Sensors & Monitoring Technologies', category: 'Defence R&D', sectionId: 'defence-tech' },
-    { title: 'Unmanned-System Technologies', category: 'Defence R&D', sectionId: 'defence-tech' },
-    { title: 'Government Infrastructure & PSUs', category: 'Services', sectionId: 'services' },
-    { title: 'Defence Infrastructure & Barracks', category: 'Services', sectionId: 'services' },
-    { title: 'Civil Construction & RCC Structures', category: 'Services', sectionId: 'services' },
-    { title: 'Electrical & LT Distribution Works', category: 'Services', sectionId: 'services' },
-    { title: 'Waterproofing for Roofs & Basements', category: 'Services', sectionId: 'services' },
-    { title: 'Annual Maintenance Contracts (AMC)', category: 'Services', sectionId: 'services' },
-    { title: 'CPWD Registered Contractor', category: 'Registrations', sectionId: 'registrations' },
-    { title: 'GeM Registered Seller & Service Provider', category: 'Registrations', sectionId: 'registrations' },
-    { title: 'Building Construction Dept (BCD) Jharkhand', category: 'Registrations', sectionId: 'registrations' },
-    { title: 'Water Resources Dept (WRD) Jharkhand', category: 'Registrations', sectionId: 'registrations' },
-    { title: 'JBVNL Registered Electrical Contractor', category: 'Registrations', sectionId: 'registrations' },
-    { title: 'Jharkhand Police Registered Vendor', category: 'Registrations', sectionId: 'registrations' },
-    { title: '11-Step Project Execution Process', category: 'Process', sectionId: 'process' },
-    { title: 'Health, Safety & Environment (HSE) Policy', category: 'Quality & HSE', sectionId: 'quality-hse' },
-    { title: 'Careers & Engineering Recruitment', category: 'Careers', sectionId: 'careers' },
-    { title: 'Head Office - Bokaro Steel City', category: 'Contact', sectionId: 'contact' }
+    { title: 'Reverse Osmosis (RO) Technology', category: 'Water Technology', pageUrl: 'water-tech.html' },
+    { title: 'Water Treatment Plants (WTP)', category: 'Water Technology', pageUrl: 'water-tech.html' },
+    { title: 'Sewage Treatment Plants (STP)', category: 'Water Technology', pageUrl: 'water-tech.html' },
+    { title: 'Effluent Treatment Plants (ETP)', category: 'Water Technology', pageUrl: 'water-tech.html' },
+    { title: 'Dialysis RO Systems (Healthcare)', category: 'Water Technology', pageUrl: 'water-tech.html' },
+    { title: 'Water Softening & Multi-Stage Filtration', category: 'Water Technology', pageUrl: 'water-tech.html' },
+    { title: 'Water Quality Monitoring & Automation', category: 'Water Technology', pageUrl: 'water-tech.html' },
+    { title: 'Defence Technology R&D & Prototyping', category: 'Defence R&D', pageUrl: 'defence-tech.html' },
+    { title: 'Sensors & Monitoring Technologies', category: 'Defence R&D', pageUrl: 'defence-tech.html' },
+    { title: 'Unmanned-System Technologies', category: 'Defence R&D', pageUrl: 'defence-tech.html' },
+    { title: 'Government Infrastructure & PSUs', category: 'Services', pageUrl: 'services.html' },
+    { title: 'Defence Infrastructure & Barracks', category: 'Services', pageUrl: 'services.html' },
+    { title: 'Civil Construction & RCC Structures', category: 'Services', pageUrl: 'services.html' },
+    { title: 'Electrical & LT Distribution Works', category: 'Services', pageUrl: 'services.html' },
+    { title: 'Waterproofing for Roofs & Basements', category: 'Services', pageUrl: 'services.html' },
+    { title: 'Annual Maintenance Contracts (AMC)', category: 'Services', pageUrl: 'services.html' },
+    { title: 'CPWD Registered Contractor', category: 'Registrations', pageUrl: 'registrations.html' },
+    { title: 'GeM Registered Seller & Service Provider', category: 'Registrations', pageUrl: 'registrations.html' },
+    { title: 'Building Construction Dept (BCD) Jharkhand', category: 'Registrations', pageUrl: 'registrations.html' },
+    { title: 'Water Resources Dept (WRD) Jharkhand', category: 'Registrations', pageUrl: 'registrations.html' },
+    { title: 'JBVNL Registered Electrical Contractor', category: 'Registrations', pageUrl: 'registrations.html' },
+    { title: 'Jharkhand Police Registered Vendor', category: 'Registrations', pageUrl: 'registrations.html' },
+    { title: '11-Step Project Execution Process', category: 'Process', pageUrl: 'process.html' },
+    { title: 'Health, Safety & Environment (HSE) Policy', category: 'Quality & HSE', pageUrl: 'quality-hse.html' },
+    { title: 'Quality Policy & QA/QC Standards', category: 'Quality & HSE', pageUrl: 'quality-hse.html' },
+    { title: 'Careers & Engineering Recruitment', category: 'Careers', pageUrl: 'careers.html' },
+    { title: 'Head Office - Bokaro Steel City', category: 'Contact', pageUrl: 'contact.html' },
+    { title: 'Request Technical Quotation / Tender', category: 'Contact', pageUrl: 'contact.html' },
+    { title: 'About Galaxy Solutions & Philosophy', category: 'About Us', pageUrl: 'about.html' }
   ];
 
   searchInput.addEventListener('input', (e) => {
@@ -265,15 +273,15 @@ function initSearch() {
     );
 
     if (matches.length === 0) {
-      searchResults.innerHTML = `<div class="p-3 text-xs text-slate-500">No matching services or registrations found. Try "RO", "CPWD", "Defence", "STP", or "Civil".</div>`;
+      searchResults.innerHTML = `<div class="p-3 text-xs text-slate-500">No matching services found. Try "RO", "CPWD", "Defence", "STP", or "Civil".</div>`;
       searchResults.classList.remove('hidden');
       return;
     }
 
     searchResults.innerHTML = matches.slice(0, 6).map(m => `
-      <a href="#${m.sectionId}" class="block p-2.5 text-xs border-b border-slate-100 hover:bg-slate-50 transition">
+      <a href="${m.pageUrl}" class="block p-2.5 text-xs border-b border-slate-100 hover:bg-slate-50 transition">
         <div class="font-semibold text-slate-900">${m.title}</div>
-        <div class="text-[10px] text-slate-500 uppercase tracking-wider">${m.category}</div>
+        <div class="text-[10px] text-brand-600 uppercase tracking-wider font-bold">${m.category}</div>
       </a>
     `).join('');
 
@@ -292,44 +300,29 @@ function initSearch() {
   });
 }
 
-// Scroll spy for active navbar state
-function initScrollSpy() {
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.desktop-nav a, .nav-item');
-
-  if (!sections.length || !navLinks.length) return;
-
-  window.addEventListener('scroll', () => {
-    let current = '';
-    const scrollPos = window.pageYOffset + 140;
-
-    sections.forEach(section => {
-      const top = section.offsetTop;
-      const height = section.offsetHeight;
-      if (scrollPos >= top && scrollPos < top + height) {
-        current = section.getAttribute('id');
-      }
-    });
-
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      const href = link.getAttribute('href');
-      if (href === `#${current}`) {
-        link.classList.add('active');
-      }
-    });
-  });
+// URL Query Parameter Handler for Preselecting Quotation Types
+function initQueryParamHandler() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const reqParam = urlParams.get('type');
+  const dropdown = document.getElementById('quoteType');
+  if (reqParam && dropdown) {
+    dropdown.value = reqParam;
+    setTimeout(() => {
+      const form = document.getElementById('quotationForm') || document.getElementById('contact');
+      form?.scrollIntoView({ behavior: 'smooth' });
+    }, 250);
+  }
 }
 
-// Helper to preset requirement type and scroll to contact
+// Helper to preset requirement type across multiple pages
 window.selectRequirementAndContact = function(reqValue) {
   const dropdown = document.getElementById('quoteType');
   if (dropdown) {
     dropdown.value = reqValue;
-  }
-  const contactSection = document.getElementById('contact');
-  if (contactSection) {
-    contactSection.scrollIntoView({ behavior: 'smooth' });
+    const form = document.getElementById('quotationForm') || document.getElementById('contact');
+    form?.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    window.location.href = 'contact.html?type=' + encodeURIComponent(reqValue);
   }
 };
 
