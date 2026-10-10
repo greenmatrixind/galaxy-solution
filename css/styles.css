@@ -470,8 +470,8 @@ body {
 /* Back to Top Floating Action Button */
 .back-to-top-btn {
   position: fixed;
-  bottom: 8.5rem;
-  right: 1.15rem;
+  bottom: 5rem;
+  right: 1rem;
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
@@ -490,8 +490,8 @@ body {
 }
 @media (min-width: 640px) {
   .back-to-top-btn {
-    bottom: 9.75rem;
-    right: 1.85rem;
+    bottom: 5.5rem;
+    right: 1.5rem;
   }
 }
 .back-to-top-btn.visible {
