@@ -348,10 +348,46 @@ function initQueryParamHandler() {
   const reqParam = urlParams.get('type');
   const dropdown = document.getElementById('quoteType');
   if (reqParam && dropdown) {
-    dropdown.value = reqParam;
+    let matched = false;
+    for (let i = 0; i < dropdown.options.length; i++) {
+      if (dropdown.options[i].value.toLowerCase() === reqParam.toLowerCase()) {
+        dropdown.selectedIndex = i;
+        matched = true;
+        break;
+      }
+    }
+    if (!matched) {
+      const q = reqParam.toLowerCase();
+      for (let i = 0; i < dropdown.options.length; i++) {
+        const optVal = dropdown.options[i].value.toLowerCase();
+        if (optVal && (optVal.includes(q) || q.includes(optVal))) {
+          dropdown.selectedIndex = i;
+          matched = true;
+          break;
+        }
+      }
+    }
+    if (!matched) {
+      const q = reqParam.toLowerCase();
+      if (q.includes('defence') || q.includes('defense') || q.includes('r&d')) {
+        dropdown.value = 'Defence Technology R&D';
+      } else if (q.includes('collab')) {
+        dropdown.value = 'Technology Collaboration';
+      } else if (q.includes('amc') || q.includes('maintenance')) {
+        dropdown.value = 'AMC / Maintenance';
+      } else if (q.includes('civil') || q.includes('construction') || q.includes('project')) {
+        dropdown.value = 'Civil Construction';
+      } else if (q.includes('ro') || q.includes('wtp') || q.includes('dialysis')) {
+        dropdown.value = 'RO / WTP';
+      } else if (q.includes('stp') || q.includes('etp')) {
+        dropdown.value = 'STP / ETP';
+      } else if (q.includes('water')) {
+        dropdown.value = 'Water Technology';
+      }
+    }
     setTimeout(() => {
       const form = document.getElementById('quotationForm') || document.getElementById('contact');
-      form?.scrollIntoView({ behavior: 'smooth' });
+      form?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 250);
   }
 }
@@ -362,7 +398,7 @@ window.selectRequirementAndContact = function(reqValue) {
   if (dropdown) {
     dropdown.value = reqValue;
     const form = document.getElementById('quotationForm') || document.getElementById('contact');
-    form?.scrollIntoView({ behavior: 'smooth' });
+    form?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   } else {
     window.location.href = 'contact.html?type=' + encodeURIComponent(reqValue);
   }
